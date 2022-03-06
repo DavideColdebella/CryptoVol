@@ -1,0 +1,10 @@
+C:\Users\Davide\Documents\GitHub\Volatility\CryptoVol\Testing\obj\Debug\Testing.csproj.CoreCompileInputs.cache
+C:\Users\Davide\Documents\GitHub\Volatility\CryptoVol\Testing\obj\Debug\Testing.csproj.AssemblyReference.cache
+C:\Users\Davide\Documents\GitHub\Volatility\CryptoVol\Testing\bin\Debug\Testing.pdb
+C:\Users\Davide\Documents\GitHub\Volatility\CryptoVol\Testing\bin\Debug\Volatility.dll
+C:\Users\Davide\Documents\GitHub\Volatility\CryptoVol\Testing\bin\Debug\Volatility.pdb
+C:\Users\Davide\Documents\GitHub\Volatility\CryptoVol\Testing\obj\Debug\Testing.csproj.CopyComplete
+C:\Users\Davide\Documents\GitHub\Volatility\CryptoVol\Testing\obj\Debug\Testing.pdb
+C:\Users\Davide\Documents\GitHub\Volatility\CryptoVol\Testing\bin\Debug\Testing.exe.config
+C:\Users\Davide\Documents\GitHub\Volatility\CryptoVol\Testing\bin\Debug\Testing.exe
+C:\Users\Davide\Documents\GitHub\Volatility\CryptoVol\Testing\obj\Debug\Testing.exe

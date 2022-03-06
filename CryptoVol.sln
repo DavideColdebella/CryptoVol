@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32106.194
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Volatility", "ClassLibrary1\Volatility.csproj", "{96DFAD4A-DD77-4350-85E3-9FF39A96FF0B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing", "Testing\Testing.csproj", "{2C69A240-0CCD-4879-A84C-6EBC48139A70}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IArrayTest", "TestProject1\IArrayTest.csproj", "{FEB23564-84FD-4C4B-BE60-F01D5A348771}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{96DFAD4A-DD77-4350-85E3-9FF39A96FF0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96DFAD4A-DD77-4350-85E3-9FF39A96FF0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96DFAD4A-DD77-4350-85E3-9FF39A96FF0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96DFAD4A-DD77-4350-85E3-9FF39A96FF0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C69A240-0CCD-4879-A84C-6EBC48139A70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C69A240-0CCD-4879-A84C-6EBC48139A70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C69A240-0CCD-4879-A84C-6EBC48139A70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C69A240-0CCD-4879-A84C-6EBC48139A70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEB23564-84FD-4C4B-BE60-F01D5A348771}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEB23564-84FD-4C4B-BE60-F01D5A348771}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEB23564-84FD-4C4B-BE60-F01D5A348771}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEB23564-84FD-4C4B-BE60-F01D5A348771}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {21D8B8F3-8911-4567-9B69-9892576C9A5F}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,9 @@
+C:\Users\Davide\Documents\GitHub\Volatility\CryptoVol\ClassLibrary1\bin\Debug\Volatility.dll
+C:\Users\Davide\Documents\GitHub\Volatility\CryptoVol\ClassLibrary1\bin\Debug\Volatility.pdb
+C:\Users\Davide\Documents\GitHub\Volatility\CryptoVol\ClassLibrary1\bin\Debug\CryptoDB.dll
+C:\Users\Davide\Documents\GitHub\Volatility\CryptoVol\ClassLibrary1\bin\Debug\CryptoDB.pdb
+C:\Users\Davide\Documents\GitHub\Volatility\CryptoVol\ClassLibrary1\obj\Debug\Volatility.csproj.CoreCompileInputs.cache
+C:\Users\Davide\Documents\GitHub\Volatility\CryptoVol\ClassLibrary1\obj\Debug\Volatility.csproj.CopyComplete
+C:\Users\Davide\Documents\GitHub\Volatility\CryptoVol\ClassLibrary1\obj\Debug\Volatility.dll
+C:\Users\Davide\Documents\GitHub\Volatility\CryptoVol\ClassLibrary1\obj\Debug\Volatility.pdb
+C:\Users\Davide\Documents\GitHub\Volatility\CryptoVol\ClassLibrary1\obj\Debug\Volatility.csproj.AssemblyReference.cache
