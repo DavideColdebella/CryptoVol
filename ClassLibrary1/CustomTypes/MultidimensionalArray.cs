@@ -21,23 +21,15 @@ namespace Volatility.CustomTypes
         /// <summary>
         /// Rectangular boundaries
         /// </summary>
-        public int MinRow = 0;
-        public int MaxRow;
-        public int MinCol = 0;
-        public int MaxCol;
-
-        private T[,] state;
+        public int MinRow { get; private set; } = 0;
+        public int MaxRow { get; private set; }
+        public int MinCol { get; private set; } = 0;
+        public int MaxCol { get; private set; }
         public int NmbRows { get; private set; }
         public int NmbCols { get; private set; }
-        //private delegate T AccessElementAt(int rowI, int colJ);
-        //private delegate void SetElementAt(int rowI, int colJ, T value);
-        //private AccessElementAt At;
-        //private SetElementAt SetAt;
-        //public T ElementAt(int rowI, int colJ) => this.At(rowI, colJ);
-        //public void ElementAt(int rowI, int colJ, T value)
-        //{
-        //    SetAt(rowI, colJ, value);
-        //}
+
+        private T[,] state;
+
         private MultidimensionalArray() { }
 
         public MultidimensionalArray(int nmbRows, int nmbCols)
@@ -47,24 +39,38 @@ namespace Volatility.CustomTypes
             NmbCols = nmbCols;
             MaxRow = nmbRows - 1;
             MaxCol = nmbCols - 1;
-            //At = (rowI, colJ) => this[rowI, colJ];
-            //SetAt = (rowI, colJ, value) => { this[rowI, colJ] = value; };
         }
 
+        public T Get(int rowI, int colJ)
+        {
+            // with safe access
+            if (rowI < MinRow || rowI > MaxRow || colJ < MinCol || colJ > MaxCol)
+                throw new ArgumentOutOfRangeException($"Ensure for cols {MinRow}<={rowI}<={MaxRow} and for rows {MinCol}<=i:{colJ}<={MaxCol}");
+            return state[rowI, colJ];
+        }
+
+        public void Set(int rowI, int colJ, T value)
+        {
+            // with safe access
+            if (rowI < MinRow || rowI > MaxRow || colJ < MinCol || colJ > MaxCol)
+                throw new ArgumentOutOfRangeException($"Ensure for cols {MinRow}<={rowI}<={MaxRow} and for rows {MinCol}<=i:{colJ}<={MaxCol}");
+            state[rowI, colJ] = value;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rowI"></param>
+        /// <param name="colJ"></param>
+        /// <returns></returns>
         public T this[int rowI, int colJ]
         {
             get
             {
-                // with safe access
-                if (rowI < MinRow || rowI > MaxRow || colJ < MinCol || colJ > MaxCol)
-                    throw new ArgumentOutOfRangeException($"Ensure for cols {MinRow}<={rowI}<={MaxRow} and for rows {MinCol}<=i:{colJ}<={MaxCol}");
                 return state[rowI, colJ]; 
             }
             set 
             {
-                // with safe access
-                if (rowI < MinRow || rowI > MaxRow || colJ < MinCol || colJ > MaxCol)
-                    throw new ArgumentOutOfRangeException($"Ensure for cols {MinRow}<={rowI}<={MaxRow} and for rows {MinCol}<=i:{colJ}<={MaxCol}"); 
                 state[rowI, colJ] = value; 
             }
         }
