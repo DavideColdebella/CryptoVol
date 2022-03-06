@@ -1,14 +1,14 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Davide\\Documents\\GitHub\\Volatility\\CryptoVol\\TestProject1\\IArrayTest.csproj": {}
+    "C:\\Users\\Davide\\Documents\\GitHub\\Thesis\\CryptoVol\\TestProject1\\IArrayTest.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Davide\\Documents\\GitHub\\Volatility\\CryptoVol\\ClassLibrary1\\Volatility.csproj": {
+    "C:\\Users\\Davide\\Documents\\GitHub\\Thesis\\CryptoVol\\ClassLibrary1\\Volatility.csproj": {
       "restore": {
-        "projectUniqueName": "C:\\Users\\Davide\\Documents\\GitHub\\Volatility\\CryptoVol\\ClassLibrary1\\Volatility.csproj",
+        "projectUniqueName": "C:\\Users\\Davide\\Documents\\GitHub\\Thesis\\CryptoVol\\ClassLibrary1\\Volatility.csproj",
         "projectName": "Volatility",
-        "projectPath": "C:\\Users\\Davide\\Documents\\GitHub\\Volatility\\CryptoVol\\ClassLibrary1\\Volatility.csproj",
+        "projectPath": "C:\\Users\\Davide\\Documents\\GitHub\\Thesis\\CryptoVol\\ClassLibrary1\\Volatility.csproj",
         "frameworks": {
           "net472": {
             "projectReferences": {}
@@ -19,14 +19,14 @@
         "net472": {}
       }
     },
-    "C:\\Users\\Davide\\Documents\\GitHub\\Volatility\\CryptoVol\\TestProject1\\IArrayTest.csproj": {
+    "C:\\Users\\Davide\\Documents\\GitHub\\Thesis\\CryptoVol\\TestProject1\\IArrayTest.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Davide\\Documents\\GitHub\\Volatility\\CryptoVol\\TestProject1\\IArrayTest.csproj",
+        "projectUniqueName": "C:\\Users\\Davide\\Documents\\GitHub\\Thesis\\CryptoVol\\TestProject1\\IArrayTest.csproj",
         "projectName": "IArrayTest",
-        "projectPath": "C:\\Users\\Davide\\Documents\\GitHub\\Volatility\\CryptoVol\\TestProject1\\IArrayTest.csproj",
+        "projectPath": "C:\\Users\\Davide\\Documents\\GitHub\\Thesis\\CryptoVol\\TestProject1\\IArrayTest.csproj",
         "packagesPath": "C:\\Users\\Davide\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Davide\\Documents\\GitHub\\Volatility\\CryptoVol\\TestProject1\\obj\\",
+        "outputPath": "C:\\Users\\Davide\\Documents\\GitHub\\Thesis\\CryptoVol\\TestProject1\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Davide\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -43,8 +43,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\Davide\\Documents\\GitHub\\Volatility\\CryptoVol\\ClassLibrary1\\Volatility.csproj": {
-                "projectPath": "C:\\Users\\Davide\\Documents\\GitHub\\Volatility\\CryptoVol\\ClassLibrary1\\Volatility.csproj"
+              "C:\\Users\\Davide\\Documents\\GitHub\\Thesis\\CryptoVol\\ClassLibrary1\\Volatility.csproj": {
+                "projectPath": "C:\\Users\\Davide\\Documents\\GitHub\\Thesis\\CryptoVol\\ClassLibrary1\\Volatility.csproj"
               }
             }
           }

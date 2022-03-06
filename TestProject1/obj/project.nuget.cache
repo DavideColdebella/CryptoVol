@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "tFcdrtZ3fHnaYtqIVImnONJTTG+FV/Pjyqhb5Q5Ls7a646uMeEzRRQPR1oqZ3VtFi5F9CbmdDT+lHgoZkTYCAQ==",
+  "dgSpecHash": "DQgQuW1MBUjHWOXfx1VcA953rFlcNaCAWZj00zO8/JYNtXr2b8Jl/sJdyPDAiMGgz5VuzhkWacpel5WgQ6oDJA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Davide\\Documents\\GitHub\\Volatility\\CryptoVol\\TestProject1\\IArrayTest.csproj",
+  "projectFilePath": "C:\\Users\\Davide\\Documents\\GitHub\\Thesis\\CryptoVol\\TestProject1\\IArrayTest.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Davide\\.nuget\\packages\\coverlet.collector\\3.0.2\\coverlet.collector.3.0.2.nupkg.sha512",
     "C:\\Users\\Davide\\.nuget\\packages\\microsoft.codecoverage\\16.9.4\\microsoft.codecoverage.16.9.4.nupkg.sha512",
