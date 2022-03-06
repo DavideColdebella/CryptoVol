@@ -71,16 +71,6 @@ namespace TestProject1
                 }
 
             }
-
-            // test explicitling calling underlying methods
-            var setter = customArr.Slice().ColIteratorSet(nmbCols - 1);
-            for (int i = 0; i < nmbRows; i++)
-            {
-                setter(i, 20 + i);
-                arr[i, nmbCols - 1] = 20 + i;
-
-                Assert.AreEqual(customArr[i, nmbCols - 1], arr[i, nmbCols - 1]);
-            }
         }
 
         /// <summary>
@@ -95,14 +85,7 @@ namespace TestProject1
 
             var customArr = new MultidimensionalArray<double>(nmbRows, nmbCols);
             double[,] arr = new double[nmbRows, nmbCols];
-            var setter = customArr.Slice().RowIteratorSet(idxRow);
-            for (int val = 0; val < nmbRows; val++)
-            {
-                setter(val, 20 + val);
-                //arr[idxRow, val] = 20 + val;
 
-                //Assert.AreEqual(customArr.ElementAt(idxRow, val), arr[idxRow, val]);
-            }
         }
     }
 }

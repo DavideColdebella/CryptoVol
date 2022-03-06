@@ -15,7 +15,9 @@ namespace Volatility.CustomTypes
     /// Row major memory layout
     ///  - https://www.google.com/search?q=%22c%23%22+multidimensional+array+memory+layout&tbm=isch&ved=2ahUKEwjZ67zy0K72AhVIvCoKHR3SDi4Q2-cCegQIABAA&oq=%22c%23%22+multidimensional+array+memory+layout&gs_lcp=CgNpbWcQAzIECAAQGFC1BVikDWCQE2gAcAB4AIABgwGIAcACkgEDMi4xmAEAoAEBqgELZ3dzLXdpei1pbWfAAQE&sclient=img&ei=6ikjYtnOAcj4qgGdpLvwAg&bih=711&biw=1536&client=firefox-b-d#imgrc=gpcPpawBMP0QzM
     ///  - iterate over a row, then you will find yourself immediately at the beginning of the successive row
-    
+    /// On IEnumerable<T>
+    ///  - https://stackoverflow.com/questions/8760322/troubles-implementing-ienumerablet
+
     public class MultidimensionalArray<T> : IArray<T>
     {
         /// <summary>
@@ -29,8 +31,6 @@ namespace Volatility.CustomTypes
         public int NmbCols { get; private set; }
 
         private T[,] state;
-
-        private MultidimensionalArray() { }
 
         public MultidimensionalArray(int nmbRows, int nmbCols)
         {
@@ -77,9 +77,8 @@ namespace Volatility.CustomTypes
 
         public ISlice<T> Slice()
         {
-            return new Slice<T>(this);
+            return new UnidimensionalSlice<T>(this);
         }
-
     }
 
     /// <summary>
@@ -88,9 +87,9 @@ namespace Volatility.CustomTypes
     /// </summary>
     public static class Extension
     {
-        public static IEnumerable<T> Col<T>(this MultidimensionalArray<T> arr, int idxCol)
+        public static IEnumerable<T> Col<T>(this MultidimensionalArray<T> arr, int idx)
         {
-            return arr.Slice().ColEnumerator(idxCol);
+            return arr.Slice().SelectCol(idx);
         }
 
         /// <summary>
@@ -98,12 +97,17 @@ namespace Volatility.CustomTypes
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="arr"></param>
-        /// <param name="idxCol"></param>
+        /// <param name="idx"></param>
         /// <param name="projection"></param>
         /// <returns></returns>
-        public static IEnumerable<T> Col<T>(this MultidimensionalArray<T> arr, int idxCol, Func<T, T> projection)
+        public static IEnumerable<T> Col<T>(this MultidimensionalArray<T> arr, int idx, Func<T, T> projection)
         {
-            return arr.Slice().ColEnumerator(idxCol, projection);
+            return arr.Slice().SelectCol(idx, projection);
+        }
+
+        public static void ApplyChanges<T>(this MultidimensionalArray<T> arr, IEnumerable<T> instructions)
+        {
+
         }
     }
 
@@ -114,94 +118,112 @@ namespace Volatility.CustomTypes
     /// 
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface ISlice<T>
+    public interface ISlice<T>: IEnumerator<T>
     {
-        Func<int, T> ColIteratorGet(int idxCol);
-        Func<int, T> RowIteratorGet(int idxRow);
-        Action<int, T> ColIteratorSet(int idxCol);
-        Action<int, T> RowIteratorSet(int idxRow);
-        IEnumerable<T> ColEnumerator(int idxCol);
-        IEnumerable<T> ColEnumerator(int idxCol, Func<T, T> projection);
-        void Execute(IEnumerable<T> instructions);
+        IEnumerable<T> SelectCol(int idx);
+        IEnumerable<T> SelectCol(int idx, Func<T, T> projection);
+        void ApplyChanges(IEnumerable<T> instructions);
     }
 
-    public class Slice<T>: ISlice<T>
+    /// <summary>
+    /// Enumerators in C#
+    ///  - https://docs.microsoft.com/en-us/dotnet/api/system.collections.ienumerable.getenumerator?view=net-6.0
+    /// lmao
+    ///   - https://forum.unity.com/threads/how-to-release-array-memory.478325/
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class UnidimensionalSlice<T>: ISlice<T>, IEnumerator<T>, IEnumerable<T>
     {
         private MultidimensionalArray<T> state;
-        private int startCol;
-        private int endCol;
-        private int startRow;
-        private int endRow;
+        private int fixedIndex;
+        private int start;
+        private int end;
+        private int position;
+        private bool isCol;
 
-        public void Execute(IEnumerable<T> instructions)
+        public T Current => isCol? state[position, fixedIndex]: state[fixedIndex, position];
+
+        object System.Collections.IEnumerator.Current => Current;
+
+        // Implementation for the GetEnumerator method.
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            for (int i = start; i < end; i++)
+                yield return Current;
+        }
+
+        private void Set(int idx, int start, int end, bool isCol)
+        {
+            this.fixedIndex = idx;
+            this.start = start;
+            this.end = end;
+            this.position = start;
+            this.isCol = isCol;
+        }
+
+        public void ApplyChanges(IEnumerable<T> instructions)
         {
             var it = instructions.GetEnumerator();
             _ = it.MoveNext();
-            for (int i = startRow; i < endRow + 1; i++)
+            for (int i = start; i < end + 1; i++)
             {
-                for (int j = startCol; i < endCol + 1; i++)
+                for (int j = start; i < end + 1; i++)
                     state[i, j] = it.Current;
                 _ = it.MoveNext();
             }
         }
 
-        private IEnumerable<T> ColEnumerator(int idxCol, int startRow, int endRow, Func<T, T> projection)
+        private IEnumerable<T> SelectCol(int idx, int start, int end, Func<T, T> projection)
         {
-            this.startCol = idxCol;
-            this.endCol = idxCol;
-            this.startRow = startRow;
-            this.endRow = endRow;
+            Set(idx, start, end, true);
 
-            for (int i = startRow; i < endRow + 1; i++)
+            for (int i = start; i < end + 1; i++)
             {
-                yield return projection(state[i, idxCol]);
+                yield return projection(state[i, fixedIndex]);
             }
         }
-        public IEnumerable<T> ColEnumerator(int idxCol, Func<T, T> projection)
+        public IEnumerable<T> SelectCol(int idx, Func<T, T> projection)
         {
-            return ColEnumerator(idxCol, state.MinRow, state.MaxRow, projection);
+            return SelectCol(idx, state.MinRow, state.MaxRow, projection);
         }
 
-        private IEnumerable<T> ColEnumerator(int idxCol, int startRow, int endRow)
+        private IEnumerable<T> SelectCol(int idx, int startRow, int endRow)
         {
+            Set(idx, start, end, true);
+
             for (int i = startRow; i < endRow + 1; i++) 
-                yield return state[i, idxCol];
+                yield return state[i, idx];
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="idxCol"></param>
-        /// <returns></returns>
-        /// <remarks>Not tested</remarks>
-        public IEnumerable<T> ColEnumerator(int idxCol)
+        public IEnumerable<T> SelectCol(int idx)
         {
-            return ColEnumerator(idxCol, state.MinRow, state.MaxRow);
+            return SelectCol(idx, state.MinRow, state.MaxRow);
         }
 
-        public Func<int, T> ColIteratorGet(int idxCol)
+        public void Dispose()
         {
-            return (i) => state[i, idxCol];
+            state = null;
         }
 
-        public Func<int, T> RowIteratorGet(int idxRow)
+        public bool MoveNext()
         {
-            return (i) => state[idxRow, i];
+            position++;
+            return (position < end + 1);
         }
 
-        public Action<int, T> ColIteratorSet(int idxCol)
+        public void Reset()
         {
-            return (i, val) => state[i, idxCol] = val;
+            Set(0, 0, 0, false);
         }
 
-        public Action<int, T> RowIteratorSet(int idxRow)
+        public UnidimensionalSlice(MultidimensionalArray<T> arr)
         {
-            return (i, val) => state[idxRow, i] = val;
-        }
-
-        public Slice(MultidimensionalArray<T> arr)
-        {
-            state = arr;
+            this.state = arr;
         }
     }
 }

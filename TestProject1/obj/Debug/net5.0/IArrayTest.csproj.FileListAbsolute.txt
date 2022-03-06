@@ -99,3 +99,8 @@ C:\Users\Davide\Documents\GitHub\Volatility\CryptoVol\TestProject1\obj\Debug\net
 C:\Users\Davide\Documents\GitHub\Volatility\CryptoVol\TestProject1\obj\Debug\net5.0\IArrayTest.pdb
 C:\Users\Davide\Documents\GitHub\Volatility\CryptoVol\TestProject1\obj\Debug\net5.0\IArrayTest.genruntimeconfig.cache
 C:\Users\Davide\Documents\GitHub\Volatility\CryptoVol\TestProject1\obj\Debug\net5.0\IArrayTest.csproj.AssemblyReference.cache
+C:\Users\Davide\Documents\GitHub\Thesis\CryptoVol\TestProject1\obj\Debug\net5.0\IArrayTest.csproj.AssemblyReference.cache
+C:\Users\Davide\Documents\GitHub\Thesis\CryptoVol\TestProject1\obj\Debug\net5.0\IArrayTest.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Davide\Documents\GitHub\Thesis\CryptoVol\TestProject1\obj\Debug\net5.0\IArrayTest.AssemblyInfoInputs.cache
+C:\Users\Davide\Documents\GitHub\Thesis\CryptoVol\TestProject1\obj\Debug\net5.0\IArrayTest.AssemblyInfo.cs
+C:\Users\Davide\Documents\GitHub\Thesis\CryptoVol\TestProject1\obj\Debug\net5.0\IArrayTest.csproj.CoreCompileInputs.cache

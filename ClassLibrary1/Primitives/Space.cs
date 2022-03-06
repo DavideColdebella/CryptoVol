@@ -29,7 +29,7 @@ namespace Volatility.Primitives
         /// <returns></returns>
         public T this[int i, int j]
         {
-            get { return space.ElementAt(i, j); }
+            get { return space[i, j]; }
         }
         #endregion
 
