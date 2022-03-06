@@ -29,15 +29,15 @@ namespace Volatility.CustomTypes
         private T[,] state;
         public int NmbRows { get; private set; }
         public int NmbCols { get; private set; }
-        private delegate T AccessElementAt(int rowI, int colJ);
-        private delegate void SetElementAt(int rowI, int colJ, T value);
-        private AccessElementAt At;
-        private SetElementAt SetAt;
-        public T ElementAt(int rowI, int colJ) => this.At(rowI, colJ);
-        public void ElementAt(int rowI, int colJ, T value)
-        {
-            SetAt(rowI, colJ, value);
-        }
+        //private delegate T AccessElementAt(int rowI, int colJ);
+        //private delegate void SetElementAt(int rowI, int colJ, T value);
+        //private AccessElementAt At;
+        //private SetElementAt SetAt;
+        //public T ElementAt(int rowI, int colJ) => this.At(rowI, colJ);
+        //public void ElementAt(int rowI, int colJ, T value)
+        //{
+        //    SetAt(rowI, colJ, value);
+        //}
         private MultidimensionalArray() { }
 
         public MultidimensionalArray(int nmbRows, int nmbCols)
@@ -47,11 +47,11 @@ namespace Volatility.CustomTypes
             NmbCols = nmbCols;
             MaxRow = nmbRows - 1;
             MaxCol = nmbCols - 1;
-            At = (rowI, colJ) => this[rowI, colJ];
-            SetAt = (rowI, colJ, value) => { this[rowI, colJ] = value; };
+            //At = (rowI, colJ) => this[rowI, colJ];
+            //SetAt = (rowI, colJ, value) => { this[rowI, colJ] = value; };
         }
 
-        private T this[int rowI, int colJ]
+        public T this[int rowI, int colJ]
         {
             get
             {
@@ -165,7 +165,7 @@ namespace Volatility.CustomTypes
             for (int i = startRow; i < endRow + 1; i++)
             {
                 for (int j = startCol; i < endCol + 1; i++)
-                    state.ElementAt(i, j, it.Current);
+                    state[i, j] = it.Current;
                 _ = it.MoveNext();
             }
         }
@@ -179,7 +179,7 @@ namespace Volatility.CustomTypes
 
             for (int i = startRow; i < endRow + 1; i++)
             {
-                yield return projection(state.ElementAt(i, idxCol));
+                yield return projection(state[i, idxCol]);
             }
         }
         public IEnumerable<T> ColEnumerator(int idxCol, Func<T, T> projection)
@@ -190,7 +190,7 @@ namespace Volatility.CustomTypes
         private IEnumerable<T> ColEnumerator(int idxCol, int startRow, int endRow)
         {
             for (int i = startRow; i < endRow + 1; i++) 
-                yield return state.ElementAt(i, idxCol);
+                yield return state[i, idxCol];
         }
 
         /// <summary>
@@ -206,22 +206,22 @@ namespace Volatility.CustomTypes
 
         public Func<int, T> ColIteratorGet(int idxCol)
         {
-            return (i) => state.ElementAt(i, idxCol);
+            return (i) => state[i, idxCol];
         }
 
         public Func<int, T> RowIteratorGet(int idxRow)
         {
-            return (i) => state.ElementAt(idxRow, i);
+            return (i) => state[idxRow, i];
         }
 
         public Action<int, T> ColIteratorSet(int idxCol)
         {
-            return (i, val) => state.ElementAt(i, idxCol, val);
+            return (i, val) => state[i, idxCol] = val;
         }
 
         public Action<int, T> RowIteratorSet(int idxRow)
         {
-            return (i, val) => state.ElementAt(idxRow, i, val);
+            return (i, val) => state[idxRow, i] = val;
         }
 
         public Slice(MultidimensionalArray<T> arr)

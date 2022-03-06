@@ -8,8 +8,6 @@ namespace Volatility.CustomTypes
 {
     public interface IArray<T>
     {
-        T ElementAt(int i, int j);
-
-
+        T this[int i, int j] { get; set; }
     }
 }
