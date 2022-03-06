@@ -74,37 +74,6 @@ namespace Volatility.CustomTypes
             return new Slice<T>(this);
         }
 
-        //public MultidimensionalArray<T> GetCol(int idxCol)
-        //{
-        //    var multidimArr = new MultidimensionalArray<T>();
-        //    multidimArr.state = this.state;
-        //    multidimArr.NmbRows = this.NmbRows;
-        //    multidimArr.NmbCols = 1;
-        //    multidimArr.MinCol = 0;
-        //    multidimArr.MaxCol = 0;
-        //    multidimArr.MinRow = this.MinRow;
-        //    multidimArr.MaxRow = this.MaxRow;
-
-        //    multidimArr.At = (i, j) => this[i, j + idxCol];
-        //    multidimArr.SetAt = (i, j, value) => { this[i, j + idxCol] = value; };
-        //    return multidimArr;
-        //}
-
-        //public MultidimensionalArray<T> GetRow(int idxRow)
-        //{
-        //    var multidimArr = new MultidimensionalArray<T>();
-        //    multidimArr.state = this.state;
-        //    multidimArr.NmbRows = 1;
-        //    multidimArr.NmbCols = this.NmbCols;
-        //    multidimArr.MinCol = this.MinCol;
-        //    multidimArr.MaxCol = this.MaxCol;
-        //    multidimArr.MinRow = 0;
-        //    multidimArr.MaxRow = 0;
-
-        //    multidimArr.At = (i, j) => this[i + idxRow, j];
-        //    multidimArr.SetAt = (i, j, value) => { this[i + idxRow, j] = value; };
-        //    return multidimArr;
-        //}
     }
 
     /// <summary>

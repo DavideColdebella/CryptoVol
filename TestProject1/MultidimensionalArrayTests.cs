@@ -18,12 +18,12 @@ namespace TestProject1
             double[,] arr = new double[n, n];
             for (int i = 0; i < n; i++)
             {
-                customSquare.ElementAt(i, i, i);
+                customSquare[i, i] = i;
                 arr[i, i] = i;
             }
 
             for (int i = 0; i < n; i++)
-                Assert.AreEqual(customSquare.ElementAt(i, i), arr[i, i]);
+                Assert.AreEqual(customSquare[i, i], arr[i, i]);
 
         }
 
@@ -40,12 +40,12 @@ namespace TestProject1
 
             for (int i = 0; i < nmbCols; i++)
             {
-                customRect.ElementAt(i, i, 15);
+                customRect[i, i] = 15;
                 arr[i, i] = 15;
             }
             arr[nmbRows - 1, nmbCols - 1] = 100;
-            customRect.ElementAt(nmbRows - 1, nmbCols - 1, 100);
-            Assert.AreEqual(customRect.ElementAt(nmbRows - 1, nmbCols - 1), arr[nmbRows - 1, nmbCols - 1]);
+            customRect[nmbRows - 1, nmbCols - 1] = 100;
+            Assert.AreEqual(customRect[nmbRows - 1, nmbCols - 1], arr[nmbRows - 1, nmbCols - 1]);
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace TestProject1
                 for (int i = 0; i < nmbRows; i++)
                 {
                     arr[i, j] = j * 10 + j;
-                    Assert.AreEqual(customArr.ElementAt(i, j), arr[i, j]);
+                    Assert.AreEqual(customArr[i, j], arr[i, j]);
                 }
 
             }
@@ -79,7 +79,7 @@ namespace TestProject1
                 setter(i, 20 + i);
                 arr[i, nmbCols - 1] = 20 + i;
 
-                Assert.AreEqual(customArr.ElementAt(i, nmbCols - 1), arr[i, nmbCols - 1]);
+                Assert.AreEqual(customArr[i, nmbCols - 1], arr[i, nmbCols - 1]);
             }
         }
 
