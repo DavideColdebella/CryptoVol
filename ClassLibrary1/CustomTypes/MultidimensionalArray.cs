@@ -67,163 +67,49 @@ namespace Volatility.CustomTypes
         {
             get
             {
-                return state[rowI, colJ]; 
+                return state[rowI, colJ];
             }
-            set 
+            set
             {
-                state[rowI, colJ] = value; 
+                state[rowI, colJ] = value;
             }
         }
 
-        public ISlice<T> Slice()
-        {
-            return new UnidimensionalSlice<T>(this);
-        }
-    }
-
-    /// <summary>
-    /// Projection?
-    ///  - https://stackoverflow.com/questions/1160217/changing-element-value-in-listt-foreach-foreach-method
-    /// </summary>
-    public static class Extension
-    {
-        public static IEnumerable<T> Col<T>(this MultidimensionalArray<T> arr, int idx)
-        {
-            return arr.Slice().SelectCol(idx);
-        }
 
         /// <summary>
-        /// Sets elements on the whole column. How to allow arbitrary starting point?
+        /// IEnumerators in C#
+        ///  - https://docs.microsoft.com/en-us/dotnet/api/system.collections.ienumerable.getenumerator?view=net-6.0
+        /// lmao
+        ///   - https://forum.unity.com/threads/how-to-release-array-memory.478325/
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="arr"></param>
-        /// <param name="idx"></param>
-        /// <param name="projection"></param>
-        /// <returns></returns>
-        public static IEnumerable<T> Col<T>(this MultidimensionalArray<T> arr, int idx, Func<T, T> projection)
+        private IEnumerable<T> Col(int idx, int startRow, int endRow)
         {
-            return arr.Slice().SelectCol(idx, projection);
-        }
-
-        public static void ApplyChanges<T>(this MultidimensionalArray<T> arr, IEnumerable<T> instructions)
-        {
-
-        }
-    }
-
-
-    /// <summary>
-    /// Safe & efficient code
-    ///  - https://docs.microsoft.com/en-us/dotnet/csharp/write-safe-efficient-code
-    /// 
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public interface ISlice<T>: IEnumerator<T>
-    {
-        IEnumerable<T> SelectCol(int idx);
-        IEnumerable<T> SelectCol(int idx, Func<T, T> projection);
-        void ApplyChanges(IEnumerable<T> instructions);
-    }
-
-    /// <summary>
-    /// Enumerators in C#
-    ///  - https://docs.microsoft.com/en-us/dotnet/api/system.collections.ienumerable.getenumerator?view=net-6.0
-    /// lmao
-    ///   - https://forum.unity.com/threads/how-to-release-array-memory.478325/
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public class UnidimensionalSlice<T>: ISlice<T>, IEnumerator<T>, IEnumerable<T>
-    {
-        private MultidimensionalArray<T> state;
-        private int fixedIndex;
-        private int start;
-        private int end;
-        private int position;
-        private bool isCol;
-
-        public T Current => isCol? state[position, fixedIndex]: state[fixedIndex, position];
-
-        object System.Collections.IEnumerator.Current => Current;
-
-        // Implementation for the GetEnumerator method.
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
-        }
-
-        public IEnumerator<T> GetEnumerator()
-        {
-            for (int i = start; i < end; i++)
-                yield return Current;
-        }
-
-        private void Set(int idx, int start, int end, bool isCol)
-        {
-            this.fixedIndex = idx;
-            this.start = start;
-            this.end = end;
-            this.position = start;
-            this.isCol = isCol;
-        }
-
-        public void ApplyChanges(IEnumerable<T> instructions)
-        {
-            var it = instructions.GetEnumerator();
-            _ = it.MoveNext();
-            for (int i = start; i < end + 1; i++)
-            {
-                for (int j = start; i < end + 1; i++)
-                    state[i, j] = it.Current;
-                _ = it.MoveNext();
-            }
-        }
-
-        private IEnumerable<T> SelectCol(int idx, int start, int end, Func<T, T> projection)
-        {
-            Set(idx, start, end, true);
-
-            for (int i = start; i < end + 1; i++)
-            {
-                yield return projection(state[i, fixedIndex]);
-            }
-        }
-        public IEnumerable<T> SelectCol(int idx, Func<T, T> projection)
-        {
-            return SelectCol(idx, state.MinRow, state.MaxRow, projection);
-        }
-
-        private IEnumerable<T> SelectCol(int idx, int startRow, int endRow)
-        {
-            Set(idx, start, end, true);
-
-            for (int i = startRow; i < endRow + 1; i++) 
+            for (int i = startRow; i < endRow + 1; i++)
                 yield return state[i, idx];
         }
 
         public IEnumerable<T> SelectCol(int idx)
         {
-            return SelectCol(idx, state.MinRow, state.MaxRow);
+            return Col(idx, MinRow, MaxRow);
         }
 
-        public void Dispose()
+        /// <summary>
+        /// Projection?
+        ///  - https://stackoverflow.com/questions/1160217/changing-element-value-in-listt-foreach-foreach-method
+        /// Safe & efficient code
+        ///  - https://docs.microsoft.com/en-us/dotnet/csharp/write-safe-efficient-code
+        /// </summary>
+        private void Apply(int idx, int start, int end, Func<T, T> projection)
         {
-            state = null;
+            for (int i = start; i < end + 1; i++)
+            {
+                state[i, idx] = projection(state[i, idx]);
+            }
         }
 
-        public bool MoveNext()
+        public void Apply(int idx, Func<T, T> projection)
         {
-            position++;
-            return (position < end + 1);
-        }
-
-        public void Reset()
-        {
-            Set(0, 0, 0, false);
-        }
-
-        public UnidimensionalSlice(MultidimensionalArray<T> arr)
-        {
-            this.state = arr;
+            Apply(idx, MinRow, MaxRow, projection);
         }
     }
 }

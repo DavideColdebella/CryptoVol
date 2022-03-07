@@ -85,6 +85,21 @@ namespace TestProject1
 
             var customArr = new MultidimensionalArray<double>(nmbRows, nmbCols);
             double[,] arr = new double[nmbRows, nmbCols];
+        }
+
+        [TestMethod]
+        public void IEnumerationTest()
+        {
+            int nmbRows = 10;
+            int nmbCols = 2;
+            var idxCol = 1;
+
+            var customArr = new MultidimensionalArray<double>(nmbRows, nmbCols);
+
+            var slice = new UnidimensionalSlice<double>(customArr);
+
+
+
 
         }
     }
